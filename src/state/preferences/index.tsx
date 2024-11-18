@@ -5,6 +5,7 @@ import {Provider as AutoplayProvider} from './autoplay'
 import {Provider as DisableHapticsProvider} from './disable-haptics'
 import {Provider as ExternalEmbedsProvider} from './external-embeds-prefs'
 import {Provider as HiddenPostsProvider} from './hidden-posts'
+import {Provider as HideNumbersProvider} from './hide-numbers'
 import {Provider as InAppBrowserProvider} from './in-app-browser'
 import {Provider as KawaiiProvider} from './kawaii'
 import {Provider as LanguagesProvider} from './languages'
@@ -23,6 +24,7 @@ export {
   useSetExternalEmbedPref,
 } from './external-embeds-prefs'
 export * from './hidden-posts'
+export {useHideNumbers, useSetHideNumbers} from './hide-numbers'
 export {useLabelDefinitions} from './label-defs'
 export {useLanguagePrefs, useLanguagePrefsApi} from './languages'
 export {useSetSubtitlesEnabled, useSubtitlesEnabled} from './subtitles'
@@ -39,7 +41,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
                   <AutoplayProvider>
                     <UsedStarterPacksProvider>
                       <SubtitlesProvider>
-                        <KawaiiProvider>{children}</KawaiiProvider>
+                        <KawaiiProvider>
+                          <HideNumbersProvider>{children}</HideNumbersProvider>
+                        </KawaiiProvider>
                       </SubtitlesProvider>
                     </UsedStarterPacksProvider>
                   </AutoplayProvider>

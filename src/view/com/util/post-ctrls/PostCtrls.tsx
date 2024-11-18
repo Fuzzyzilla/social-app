@@ -27,6 +27,7 @@ import {shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
 import {Shadow} from '#/state/cache/types'
 import {useFeedFeedbackContext} from '#/state/feed-feedback'
+import {useHideNumbers} from '#/state/preferences/hide-numbers'
 import {
   usePostLikeMutationQueue,
   usePostRepostMutationQueue,
@@ -81,6 +82,7 @@ let PostCtrls = ({
     logContext,
   )
   const requireAuth = useRequireAuth()
+  const hideNumbers = useHideNumbers()
   const loggedOutWarningPromptControl = useDialogControl()
   const {sendInteraction} = useFeedFeedbackContext()
   const {captureAction} = useProgressGuideControls()
@@ -314,12 +316,14 @@ let PostCtrls = ({
             big={big}
             hasBeenToggled={hasLikeIconBeenToggled}
           />
-          <CountWheel
-            likeCount={post.likeCount ?? 0}
-            big={big}
-            isLiked={Boolean(post.viewer?.like)}
-            hasBeenToggled={hasLikeIconBeenToggled}
-          />
+          {!hideNumbers ? (
+            <CountWheel
+              likeCount={post.likeCount ?? 0}
+              big={big}
+              isLiked={Boolean(post.viewer?.like)}
+              hasBeenToggled={hasLikeIconBeenToggled}
+            />
+          ) : undefined}
         </Pressable>
       </View>
       {big && (

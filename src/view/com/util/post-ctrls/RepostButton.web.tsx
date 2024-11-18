@@ -3,6 +3,7 @@ import {Pressable, View} from 'react-native'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useHideNumbers} from '#/state/preferences/hide-numbers'
 import {useRequireAuth} from '#/state/session'
 import {useSession} from '#/state/session'
 import {atoms as a, useTheme} from '#/alf'
@@ -129,10 +130,12 @@ const RepostInner = ({
   big?: boolean
 }) => {
   const {i18n} = useLingui()
+  let hideNumbers = useHideNumbers()
+
   return (
     <View style={[a.flex_row, a.align_center, a.gap_xs, {padding: 5}]}>
       <Repost style={color} width={big ? 22 : 18} />
-      {typeof repostCount !== 'undefined' && repostCount > 0 ? (
+      {typeof repostCount !== 'undefined' && repostCount > 0 && !hideNumbers ? (
         <Text
           testID="repostCount"
           style={[

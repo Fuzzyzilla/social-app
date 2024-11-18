@@ -5,6 +5,7 @@ import {useLingui} from '@lingui/react'
 
 import {POST_CTRL_HITSLOP} from '#/lib/constants'
 import {useHaptics} from '#/lib/haptics'
+import {useHideNumbers} from '#/state/preferences/hide-numbers'
 import {useRequireAuth} from '#/state/session'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
@@ -36,6 +37,7 @@ let RepostButton = ({
   const requireAuth = useRequireAuth()
   const dialogControl = Dialog.useDialogControl()
   const playHaptic = useHaptics()
+  const hideNumbers = useHideNumbers()
 
   const color = React.useMemo(
     () => ({
@@ -76,7 +78,9 @@ let RepostButton = ({
         color="secondary"
         hitSlop={POST_CTRL_HITSLOP}>
         <Repost style={color} width={big ? 22 : 18} />
-        {typeof repostCount !== 'undefined' && repostCount > 0 ? (
+        {!hideNumbers &&
+        typeof repostCount !== 'undefined' &&
+        repostCount > 0 ? (
           <Text
             testID="repostCount"
             style={[

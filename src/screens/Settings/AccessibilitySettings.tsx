@@ -7,8 +7,10 @@ import {CommonNavigatorParams} from '#/lib/routes/types'
 import {isNative} from '#/platform/detection'
 import {
   useHapticsDisabled,
+  useHideNumbers,
   useRequireAltTextEnabled,
   useSetHapticsDisabled,
+  useSetHideNumbers,
   useSetRequireAltTextEnabled,
 } from '#/state/preferences'
 import {
@@ -37,6 +39,8 @@ export function AccessibilitySettingsScreen({}: Props) {
   const setHapticsDisabled = useSetHapticsDisabled()
   const largeAltBadgeEnabled = useLargeAltBadgeEnabled()
   const setLargeAltBadgeEnabled = useSetLargeAltBadgeEnabled()
+  const hideNumbers = useHideNumbers()
+  const setHideNumbers = useSetHideNumbers()
 
   return (
     <Layout.Screen>
@@ -56,6 +60,17 @@ export function AccessibilitySettingsScreen({}: Props) {
               style={[a.w_full]}>
               <Toggle.LabelText style={[a.flex_1]}>
                 <Trans>Require alt text before posting</Trans>
+              </Toggle.LabelText>
+              <Toggle.Platform />
+            </Toggle.Item>
+            <Toggle.Item
+              name="hide_numbers"
+              label={_(msg`Hide Numbers`)}
+              value={hideNumbers ?? false}
+              onChange={value => setHideNumbers(value)}
+              style={[a.w_full]}>
+              <Toggle.LabelText style={[a.flex_1]}>
+                <Trans>Hide like and repost counts</Trans>
               </Toggle.LabelText>
               <Toggle.Platform />
             </Toggle.Item>
